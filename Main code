@@ -1,0 +1,79 @@
+let startPage = 1;     // start page
+let endPage = 100;     // end page
+
+let trustedURL;
+
+if (window.trustedTypes && trustedTypes.createPolicy) {
+    const policy = trustedTypes.createPolicy('myPolicy', {
+        createScriptURL: (input) => input
+    });
+
+    trustedURL = policy.createScriptURL(
+        'https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js'
+    );
+} else {
+    console.warn(
+        "Trusted Types are not supported in this browser."
+    );
+
+    trustedURL =
+        'https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js';
+}
+
+let jspdf = document.createElement("script");
+
+jspdf.onload = function () {
+
+    let pdf = new jsPDF();
+
+    // find every blob images
+    let images = Array.from(
+        document.getElementsByTagName("img")
+    ).filter(img => /^blob:/.test(img.src));
+
+    // only focus on specific pages
+    let selectedImages =
+        images.slice(startPage - 1, endPage);
+
+    for (let img of selectedImages) {
+
+        let canvasElement = document.createElement('canvas');
+        let con = canvasElement.getContext("2d");
+
+        canvasElement.width = img.width;
+        canvasElement.height = img.height;
+
+        con.drawImage(
+            img,
+            0,
+            0,
+            img.width,
+            img.height
+        );
+
+        let imgData =
+            canvasElement.toDataURL("image/jpeg", 1.0);
+
+        pdf.addImage(
+            imgData,
+            'JPEG',
+            0,
+            0
+        );
+
+        pdf.addPage();
+    }
+
+    // 避免最後多一個空白頁
+    if (selectedImages.length > 0) {
+        // 這裡的邏輯可再依 jsPDF 版本調整
+    }
+
+    pdf.save(
+        `download-${startPage}-${endPage}.pdf`
+    );
+};
+
+jspdf.src = trustedURL;
+
+document.body.appendChild(jspdf);
