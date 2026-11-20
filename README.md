@@ -4,13 +4,13 @@ Work with AI tools (chatGPT)
 
 ## Big-Note: Use this script wisely!
 ### Instruction
-1. Open the PDF from Google Drive,
-2. Click Preview,
-3. Then on top right page click on three vertical dots menu -> Open in new window,
-4. Scroll down pdf to end of content and make sure all of content is loaded,
-5. Inspect element your browser and go to console tab,
-6. Type allow pasting and press ENTER, if you are using Chrome and cannot paste any code directly in the console tab,
-7. Copy and paste script below on console tab,
+1. Open the PDF from Google Drive, 從雲端硬碟開啟檔案
+2. Click Preview, 點擊預覽
+3. Then on top left page click on "File" -> Open -> Open in new window, 點擊左上角檔案->開啟->在新分頁開啟
+4. Scroll down pdf to end of content and make sure all of content is loaded, 滑到最下面載入整份檔案(如果遇到問題就分批慢慢載入)
+5. Inspect element your browser and go to console tab, 按下F12開啟主控台
+6. Type allow pasting and press ENTER, if you are using Chrome and cannot paste any code directly in the console tab, 如果不能直接貼上的話，打「允許貼上」(如果介面沒有中文打英文 allow pasting)，按下ENTER
+7. Copy and paste script below on console tab, 複製貼上以下程式碼按下ENTER
 
 ```javascript
 let startPage = 1;     // start page
@@ -93,8 +93,8 @@ jspdf.src = trustedURL;
 
 document.body.appendChild(jspdf);
 ```
-8. Select file save place
-9. Finish 😻
+8. Select file save place, 選擇想要儲存檔案的位置
+9. Finish 😻 完成!
 
 ## Source Reference
 This script is modified with source from :
